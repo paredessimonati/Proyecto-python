@@ -10,7 +10,7 @@ The game is designed to be simple and accessible for beginners with no prior pro
 Installation and Usage
 To run the game, you will need to have Python 3.x installed on your computer. You can download the latest version of Python from the official website: https://www.python.org/downloads/
 
-Once you have Python installed, you can download the game files from the GitHub repository: https://github.com/paredessimonati/
+Once you have Python installed, you can download the game files from the GitHub repository: https://github.com/paredessimonati/Proyecto-python
 
 To run the game, open a terminal or command prompt and navigate to the directory where you downloaded the game files. Then, run the following command: 
 
