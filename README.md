@@ -3,7 +3,7 @@ ADVENTURE!
 Project Description
 This project is a simple game written in Python, a text-based adventure game, where the player must navigate through a series of rooms and solve puzzles in order to progress to the next level.
 
-The game consists of a main script (game.py) and several other Python modules that implement various game mechanics, such as room generation (room.py), enemies encounters, and game logic (game_logic.py). The game uses the standard Python random library to generate random rooms and puzzles, so every playthrough will be different.
+The game consists of a main script (game.py) and several other Python modules that implement various game mechanics, such as room generation (room.py), enemies encounters, and game logic (game_logic.py). The game uses the standard Python random library to generate random rooms and encounters, so every playthrough will be different.
 
 The game is designed to be simple and accessible for beginners with no prior programming experience, but it still demonstrates some of the core concepts covered in the CS50 course.
 
