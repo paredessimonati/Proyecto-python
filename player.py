@@ -6,6 +6,7 @@ class Player:
         self.blind = 0
         self.evasion = 20
         self.accuracy = 80
+        self.money = 0
 
     @property
     def hp(self):

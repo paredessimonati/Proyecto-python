@@ -26,9 +26,11 @@ def main():
     aggro = random.randrange(1, 11) + difficulty
     if aggro <= attributes.enemies[room.current_room["enemy"]]["likelihood"]:
         print(attributes.enemies[room.current_room["enemy"]]["attacks"])
+        print()
         game_logic.fight_loop(player, enemy, difficulty)
     else:
         print(attributes.enemies[room.current_room["enemy"]]["no_attack"])
+        print()
 
     game_logic.main_loop(player, room, enemy)
     # if input().strip().lower() == "a":

@@ -1,5 +1,6 @@
 import random
 import attributes
+import re
 
 
 class Room:
@@ -8,12 +9,18 @@ class Room:
         self.description_1 = ""
         self.description_2 = ""
         self.description_3 = ""
+        self.description_search = ""
+        self.loot = ""
+        self.potion = ""
 
     def enemy_in_room(self):
         return self.current_room
 
     def room_after_encounter(self):
         return self.description_1, self.description_2, self.description_3
+
+    def room_loot(self):
+        return self.loot, self.potion
 
     def get_attributes(self) -> dict:
         # getting all the variables up and randomized
@@ -30,21 +37,16 @@ class Room:
             "torches": random.choice(attributes.torches),
             "sound": random.choice(attributes.sounds),
             "occupancy": random.choice(attributes.occupancy),
-            "exits": random.choice(attributes.exits),
+            "search": random.choice(attributes.search),
+            "exits": random.sample(attributes.exits, random.randrange(1, 4)),
             "trap_doors": random.choice(attributes.trap_doors),
-            "container": random.choice(attributes.containers),
+            "containers": random.choice(attributes.containers),
             "enemy": random.choice(list(attributes.enemies)),
             "treasure": random.choice(list(attributes.treasure)),
             "what_in_front": random.choice(attributes.what_in_front),
-            "search": random.choice(attributes.search),
+            "directions": random.shuffle(attributes.directions),
         }
 
-        # some variables wont happen every time, separating for easier adjustment
-        # random_number = random.randrange(1, 10)
-        if random.randrange(1, 10) < 3:
-            random_variables_dict["trap_door"] = 0
-        if random.randrange(1, 10) < 4:
-            random_variables_dict["treasure"] = 0
         return random_variables_dict
 
     def new_room(self):
@@ -97,7 +99,7 @@ class Room:
         # Third Line
         for _ in range(10, 12):
             attr, value = list(self.current_room.items())[_]
-            self.description_3 = f"{value}"
+            self.description_3 += f"{value}"
         # description += f"{random.choice(['To the left ', 'To the right '])}"
         # description += f'{self.current_room["exits"]}'
         # if random.randrange(100) < 30:
@@ -113,6 +115,24 @@ class Room:
         print(f"{description_enemy}\n")
         print(press_to_continue)
         return input()
-    
-    def search_room(self)
-        return
+
+    def room_search(self):
+        exits = self.current_room["exits"]
+        print(f'{self.current_room["search"]}\n')
+
+        print("- Exits:")
+        for _ in range(len(exits)):
+            print(f"You see {exits[_]} {attributes.directions[_]}.")
+
+        if random.randrange(1, 100) > 95:
+            print(f'\nYou see {self.current_room["trap_doors"]} beneath you.')
+
+        if random.randrange(1, 100) > 0:
+            print(
+                f'\n- Loot:\nYou see {self.current_room["containers"]} {attributes.directions[4]}.'
+            )
+            self.loot = re.findall(r"'(.*)'", self.current_room["containers"])
+        if random.randrange(1, 100) > 70:
+            print(f"\n- Potion:\nYou see a 'red potion' {attributes.directions[5]}.\n")
+            self.potion = "red potion"
+        return 0

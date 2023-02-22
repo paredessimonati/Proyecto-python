@@ -5,7 +5,7 @@ class Enemy:
     def __init__(self, enemy_in_room):
         self._hp = attributes.enemies[enemy_in_room["enemy"]]["hp"]
         self.attack = int(attributes.enemies[enemy_in_room["enemy"]]["hp"] / 10)
-        self.name = enemy_in_room["enemy"][2:]
+        self.name = enemy_in_room["enemy"]
 
     @property
     def hp(self):
