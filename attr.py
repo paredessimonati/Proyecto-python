@@ -202,6 +202,19 @@ what_in_front = [
     "You glimpse a ",
 ]
 
+no_enemy = [
+    "a chill runs down your spine",
+    "Your palms start to sweat.",
+    "You feel a tightness in your chest.",
+    "The hairs on the back of your neck stand up.",
+    "You feel a sense of impending doom.",
+    "Your mind races with uncertainty.",
+    "Your knees begin to buckle.   ",
+    "You feel like you're being watched.",
+    "Your eyes dart around nervously.   ",
+    "You are filled with a sense of emptiness.",
+]
+
 search = [
     "You look around the room...",
     "You examine the area...",
@@ -285,7 +298,7 @@ enemies = {
         "attacks": "The coffer suddenly springs open, revealing a set of \nrazor-sharp teeth and a pair of glowing red eyes!",
         "hp": 80,
         "defeat": "The mimic makes a sophisticated and theatrical scream \nbefore revealing all its contents",
-        "after": "The mimic treasure is right in front of you.",
+        "after": "The mimic's treasure is right in front of you.",
         "no_attack": "The coffer blinks and blinks again, revealing itself to \nbe a sentient mimic that is happy to chat.",
     },
     "rabbit with blood dripping from its mouth": {
@@ -401,7 +414,7 @@ containers = [
 ]
 
 
-treasure = {
+loot = {
     "JEWEL_NECKLACE": {
         "value": 70,
         "description": "a stunning necklace adorned with glittering jewels.",

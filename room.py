@@ -1,5 +1,5 @@
 import random
-import attributes
+import attr
 import re
 
 
@@ -12,6 +12,7 @@ class Room:
         self.description_search = ""
         self.loot = ""
         self.potion = ""
+        self.seed = 0
 
     def enemy_in_room(self):
         return self.current_room
@@ -22,39 +23,42 @@ class Room:
     def room_loot(self):
         return self.loot, self.potion
 
-    def get_attributes(self) -> dict:
+    def get_attr(self) -> dict:
         # getting all the variables up and randomized
         random_variables_dict = {
-            "room": random.choice(attributes.room),
-            "visibility": random.choice(attributes.visibility),
-            "temperature": random.choice(attributes.temperature),
-            "air": random.choice(attributes.air),
-            "humidity": random.choice(attributes.humidity),
-            "decoration": random.choice(attributes.decoration),
-            "furniture": random.choice(attributes.furniture),
-            "floor texture": random.choice(attributes.floor_texture),
-            "torch_number": random.choice(attributes.torch_number),
-            "torches": random.choice(attributes.torches),
-            "sound": random.choice(attributes.sounds),
-            "occupancy": random.choice(attributes.occupancy),
-            "search": random.choice(attributes.search),
-            "exits": random.sample(attributes.exits, random.randrange(1, 4)),
-            "trap_doors": random.choice(attributes.trap_doors),
-            "containers": random.choice(attributes.containers),
-            "enemy": random.choice(list(attributes.enemies)),
-            "treasure": random.choice(list(attributes.treasure)),
-            "what_in_front": random.choice(attributes.what_in_front),
-            "directions": random.shuffle(attributes.directions),
+            "room": random.choice(attr.room),
+            "visibility": random.choice(attr.visibility),
+            "temperature": random.choice(attr.temperature),
+            "air": random.choice(attr.air),
+            "humidity": random.choice(attr.humidity),
+            "decoration": random.choice(attr.decoration),
+            "furniture": random.choice(attr.furniture),
+            "floor texture": random.choice(attr.floor_texture),
+            "torch_number": random.choice(attr.torch_number),
+            "torches": random.choice(attr.torches),
+            "sound": random.choice(attr.sounds),
+            "occupancy": random.choice(attr.occupancy),
+            "search": random.choice(attr.search),
+            "exits": random.sample(attr.exits, random.randrange(1, 4)),
+            "trap_doors": random.choice(attr.trap_doors),
+            "containers": random.choice(attr.containers),
+            "enemy": random.choice(list(attr.enemies)),
+            "loot": random.choice(list(attr.loot)),
+            "what_in_front": random.choice(attr.what_in_front),
+            "directions": random.shuffle(attr.directions),
+            "no_enemy": random.choice(attr.no_enemy),
         }
 
         return random_variables_dict
 
     def new_room(self):
-        if self.current_room == None:
-            self.current_room = self.get_attributes()
+        if self.current_room is None:
+            self.current_room = self.get_attr()
             self.current_room["room"] = "You open your eyes."
         else:
-            self.current_room = self.get_attributes()
+            self.current_room.clear()
+            self.current_room = self.get_attr()
+        self.seed = str(random.randrange(11111111, 99999999))
 
     def describe_room(self):
         # setting up long printing variables
@@ -67,7 +71,7 @@ class Room:
 
         # Starting with empty canvas from line 2.
         for _ in range(1, 5):
-            attr, value = list(self.current_room.items())[_]
+            attribute, value = list(self.current_room.items())[_]
             self.description_1 += f"{value}"
         if (
             self.current_room["visibility"] == "room is pitch black. The temperature"
@@ -81,7 +85,7 @@ class Room:
         # Second Line
         self.description_2 = "The decoration is "
         for _ in range(5, 9):
-            attr, value = list(self.current_room.items())[_]
+            attribute, value = list(self.current_room.items())[_]
             self.description_2 += f"{value}"
         if self.current_room["torch_number"] != " you see no light sources. ":
             if self.current_room["torch_number"] == " and a few ":
@@ -98,41 +102,36 @@ class Room:
 
         # Third Line
         for _ in range(10, 12):
-            attr, value = list(self.current_room.items())[_]
+            attribute, value = list(self.current_room.items())[_]
             self.description_3 += f"{value}"
-        # description += f"{random.choice(['To the left ', 'To the right '])}"
-        # description += f'{self.current_room["exits"]}'
-        # if random.randrange(100) < 30:
-        #     description += f'you see {self.current_room["trap_doors"]}'
+        input(f"{self.description_3}\n\n{press_to_continue}")
 
-        # Last line before enemy, asking for input to continue
-        print(f"{self.description_3}\n\n{press_to_continue}")
-        input()
-
-        self.description = f'{self.current_room["what_in_front"]}'
-        self.description += f'{self.current_room["enemy"]}'
-        description_enemy = self.description
-        print(f"{description_enemy}\n")
-        print(press_to_continue)
-        return input()
+        if self.seed[6:8] > "25":
+            self.description = f'{self.current_room["what_in_front"]}'
+            self.description += f'{self.current_room["enemy"]}'
+            description_enemy = self.description
+            print(f"\n{description_enemy}\n")
+            input(press_to_continue)
+        else:
+            self.current_room["enemy"] = "nothing"
 
     def room_search(self):
         exits = self.current_room["exits"]
         print(f'{self.current_room["search"]}\n')
-
         print("- Exits:")
         for _ in range(len(exits)):
-            print(f"You see {exits[_]} {attributes.directions[_]}.")
+            print(f"You see {exits[_]} {attr.directions[_]}.")
 
-        if random.randrange(1, 100) > 95:
+        if self.seed[0:2] > "95":
             print(f'\nYou see {self.current_room["trap_doors"]} beneath you.')
 
-        if random.randrange(1, 100) > 0:
+        if self.seed[2:4] > "00":
             print(
-                f'\n- Loot:\nYou see {self.current_room["containers"]} {attributes.directions[4]}.'
+                f'\n- Loot:\nYou see {self.current_room["containers"]} {attr.directions[4]}.'
             )
             self.loot = re.findall(r"'(.*)'", self.current_room["containers"])
-        if random.randrange(1, 100) > 70:
-            print(f"\n- Potion:\nYou see a 'red potion' {attributes.directions[5]}.\n")
+        if self.seed[4:6] >= "01":
             self.potion = "red potion"
+            print(f"\n- Potion:\nYou see a 'red potion' {attr.directions[5]}.\n")
+
         return 0
