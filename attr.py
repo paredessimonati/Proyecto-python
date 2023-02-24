@@ -87,7 +87,6 @@ furniture = [
     " and the furniture expensive.",
 ]
 
-
 floor_texture = [
     " The floor feels rough ",
     " The floor feels smooth ",
@@ -124,7 +123,6 @@ torches = [
     "blue",
     "purple",
 ]
-
 
 sounds = [
     " You hear dripping water. ",
@@ -184,7 +182,6 @@ occupancy_no_spawn = [
     "The room is full of life, with vibrant colors and patterns.",
     "The room is alive with energy, like a spark of inspiration.",
 ]
-
 
 exits = [
     "a simple door",
@@ -276,6 +273,7 @@ what_in_front = [
     "At the back of the room there seems to be a ",
     "Hidden in the shadows there is a ",
 ]
+
 no_enemy = [
     " A chill runs down your spine",
     " Your palms start to sweat.",
@@ -486,7 +484,6 @@ containers = [
     "'plain chest'",
     "'chest'",
 ]
-
 
 loot = {
     "JEWEL_NECKLACE": {
