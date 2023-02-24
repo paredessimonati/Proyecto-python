@@ -20,7 +20,7 @@ def main():
     while player._hp > 0:
         room = Room()
         room.new_room()
-        enemy = Enemy(room.enemy_in_room())
+        enemy = Enemy(room.room_variables())
 
         # Print the description of the current room
         room.describe_room()

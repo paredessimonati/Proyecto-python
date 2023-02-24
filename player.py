@@ -1,6 +1,7 @@
 class Player:
     def __init__(self) -> None:
         self._hp = 300
+        self.name = ""
         self.attack = 10
         self.defense = 0
         self.blind = 0
