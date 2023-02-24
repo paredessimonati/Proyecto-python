@@ -1,4 +1,4 @@
-# ADVENTURE!
+# Pythonic Adventure
 
 #### Video Demo: not yet
 
