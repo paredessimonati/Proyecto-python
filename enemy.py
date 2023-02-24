@@ -6,7 +6,7 @@ class Enemy:
         self._hp = attr.enemies[room_variables["enemy"]]["hp"]
         self.attack = int(attr.enemies[room_variables["enemy"]]["hp"] / 10)
         self.name = room_variables["enemy"]
-        self.alive = 1
+        self.alive = True
         self.visible = True
         self.aggro = True
 

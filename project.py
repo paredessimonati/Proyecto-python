@@ -1,46 +1,52 @@
-from room import Room
-from enemy import Enemy
+from game_logic import main_loop
 from player import Player
-import game_logic
-import random
+import text, os
 
-# import game_logic
-import attr
+DEBUG_MODE = 1  # skips intro and stuff
 
 
 def main():
-    # set difficulty
+    # Set difficulty (damage received)
     difficulty = 0
 
-    # Create a new instance of the Room class
+    # Set probability of the enemy spawning in the current room.
+    enemy_spawning = 99
 
-    player = Player()
-    # Generate a new randomized room
+    if DEBUG_MODE == 0:
+        # clear the screen
+        os.system("cls" if os.name == "nt" else "clear")
+        print(text.castle)
+        text.title2("ADVENTURE!!!")
+        # Create a Player
+        player = Player()
+        player_name = input("Please enter your name:")
+    else:
+        player = Player()
+    os.system("cls" if os.name == "nt" else "clear")
+    # player.name = input(...TODO...)
 
-    while player._hp > 0:
-        room = Room()
-        room.new_room()
-        enemy = Enemy(room.room_variables())
+    # add some story
 
-        # Print the description of the current room
-        room.describe_room()
+    # Start the game
+    # Counter for how many rooms the player cleared.
+    room_counter = 0
+    game_variables = {
+        "difficulty": difficulty,
+        "enemy_spawning": enemy_spawning,
+        "player": player,
+        "room_counter": room_counter,
+    }
+    main_loop(game_variables)
 
-        # Checking if enemy appeared
-        if room.current_room["enemy"] == "nothing":
-            game_logic.main_loop(player, room, enemy, difficulty)
-        else:
-            # Checking if aggro
-            aggro = random.randrange(1, 11) + difficulty
-            if aggro <= attr.enemies[room.current_room["enemy"]]["likelihood"]:
-                print(f'\n{attr.enemies[room.current_room["enemy"]]["attacks"]}')
-                input(f"\n{'-' * 21}Press Enter to Continue{'-' * 21}")
-                game_logic.fight_loop(player, enemy, difficulty)
-            else:
-                print(f'\n{attr.enemies[room.current_room["enemy"]]["no_attack"]}')
-                print()
-        game_logic.main_loop(player, room, enemy, difficulty)
+    # # debug section
 
-        continue
+    # print("------")
+    # print("------")
+    # print("------")
+    # print("------")
+    # print("------")
+    # print("------")
+    # print(room_counter)
 
 
 if __name__ == "__main__":

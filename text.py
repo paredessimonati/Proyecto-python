@@ -34,6 +34,12 @@ class color:
 TEXTSPEED = 0.1
 
 
+# Lines to make things clearer
+line = "-" * 80
+
+enter = "-" * 28 + "Press Enter to Continue" + "-" * 29
+
+
 # this i did myself though
 def format(text, jump="no_jump"):
     linebreak = ""
@@ -42,31 +48,68 @@ def format(text, jump="no_jump"):
     if jump == "double":
         linebreak = "\n\n"
     split_text = re.split("(?<=\.\s)", text)
-    print("\n" * (6 - len(split_text)))
+    # print("\n" * (6 - len(split_text)))
     for string in split_text:
-        # time.sleep(TEXTSPEED)
+        time.sleep(TEXTSPEED)
         if len(string) > 80:
             print(f"{textwrap.fill(string, 60)}{linebreak}")
         else:
             print(f"{(string)}{linebreak}")
-    print("\033[99B")
-    print("\033[3A")
+    # print("\033[99B")
+    # print("\033[3A")
 
 
-def yes_no():
-    print(f"{color.green}", end="")
+def print_exit(text):
+    for number, letter in enumerate(text, 1):
+        time.sleep(TEXTSPEED)
+        print(number, letter)
+
+
+def menu() -> str:
+    """Prints the command menu at the bottom of the terminal"""
+    menu = "\033[99B\033[4AWhat would you like to do?\nCommands: Room, Search, Attack, Open, Drink, Exit"
+    return menu
+
+
+def fight_menu() -> str:
+    """Prints the simple fight menu at the bottom of the terminal"""
+    menu = f"\033[99B\033[4A\n\n{enter}"
+    return menu
+
+
+def yes_no(text=""):
+    print(text)
+    print(f"\n{color.green}", end="")
     print("Yes", color.red, "No", color.reset)
 
 
-# Lines to make things clearer
-line = "-" * 80
+def red(string) -> str:
+    """Returns red string"""
+    string = color.red + str(string) + color.reset
+    return string
 
-enter = "-" * 28 + "Press Enter to Continue" + "-" * 29
+
+def green(string) -> str:
+    """Returns green string"""
+    string = color.green + str(string) + color.reset
+    return string
+
+
+def bold(string) -> str:
+    """Returns bold string"""
+    string = color.bold + str(string) + color.reset
+    return string
 
 
 # if no parameter is sent, it will default to that message
 def super_line(text="Press Enter to Continue"):
+    print()
     print(line)
+
+    # If the passed variable isnt text it should be the health, so:
+    if isinstance(text, int):
+        text = f"Health = {str(text)}"
+
     if len(text) % 2 == 1:
         dashes = int((77 - len(text)) / 2)
         print(("-" * (dashes + 1)), text, "-" * dashes)
