@@ -151,5 +151,5 @@ And also to all of stackoverflow for helping me get unstuck with this project.
 
 Thanks!
 
-Alejandro Paredes
+Alejandro Paredes.
 Santiago, Chile
