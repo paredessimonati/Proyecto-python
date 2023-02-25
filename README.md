@@ -1,4 +1,4 @@
-# ADVENTURE!
+# Pythonic Adventure
 
 #### Video Demo: not yet
 
@@ -13,7 +13,7 @@ This is it! A text adventure game, like the ones I grew up playing.
 
 I cheated a little and when I reached the last CS50 class I took the CS50 python
 course to get more practice with python. Now I have to do the CS50 python final
-project, but I digress.
+project too, but I digress.
 
 I want to thank my wife for beta testing the game and helping me write and
 correct a lot of dialogues.
@@ -151,5 +151,5 @@ And also to all of stackoverflow for helping me get unstuck with this project.
 
 Thanks!
 
-Alejandro Paredes
+Alejandro Paredes.
 Santiago, Chile
