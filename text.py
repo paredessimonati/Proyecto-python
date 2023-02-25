@@ -31,7 +31,7 @@ class color:
 
 
 # controls time delay in seconds, 0 is fastest
-TEXTSPEED = 0.1
+TEXTSPEED = 0.08
 
 
 # Lines to make things clearer
@@ -55,8 +55,8 @@ def format(text, jump="no_jump"):
             print(f"{textwrap.fill(string, 60)}{linebreak}")
         else:
             print(f"{(string)}{linebreak}")
-    # print("\033[99B")
-    # print("\033[3A")
+    print("\033[99B")
+    print("\033[3A")
 
 
 def print_exit(text):
@@ -122,8 +122,8 @@ def super_line(text="Press Enter to Continue"):
 # Art (https://www.asciiart.eu/)
 castle = """                                                |>>>
                                                 |
-                                            _  _|_  _
-                                           |;|_|;|_|;|
+                                            _  _|_   _
+                                           |;|_|;|__|;|
                                            \ \.    .  /
                                             \ \:  .  /
                                              | |:   |
@@ -145,20 +145,6 @@ castle = """                                                |>>>
 
 
 def title(letters):
-    print(f'\n{" " * 35}', end="")
-    for letter in letters:
-        print(letter, end="", flush=True)
-        time.sleep(0.1)
-    print("\r", end="")
-    time.sleep(0.5)
-    print("\033[K", end="")
-    time.sleep(0.5)
-    print(f'{" " * 25}', end="")
-    print(letters)
-    print("")
-
-
-def title2(letters):
     print("\033[K", end="")
     print("\033[12F", end="")
     print(f'{" " * 25}', end="")
@@ -168,6 +154,23 @@ def title2(letters):
     print("\033[32C", end="")
     print("\033[3B", end="")
     for letter in "caaak":
+        print(letter, end="", flush=True)
+        time.sleep(TEXTSPEED / 2)
+    print("")
+    print("\033[12B", end="")
+    print("\033[K", end="")
+
+
+def death(letters):
+    print("\033[K", end="")
+    print("\033[12F", end="")
+    print(f'{" " * 25}', end="")
+    for letter in letters:
+        print(letter, end="", flush=True)
+        time.sleep(TEXTSPEED)
+    print("\033[33C", end="")
+    print("\033[3B", end="")
+    for letter in "lol...":
         print(letter, end="", flush=True)
         time.sleep(TEXTSPEED / 2)
     print("")

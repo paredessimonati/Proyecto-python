@@ -15,7 +15,7 @@ room = [
 ]
 
 visibility = [
-    "The room is pitch black. The temperature",
+    "The room is pitch black. The temperature ",
     "The light is dim. The room ",
     "The light is Shadowy. The room ",
     "The room is faintly lit. The temperature ",
@@ -201,7 +201,7 @@ exits = [
     "a golden ladder",
     "a termite infested ladder",
     "a decaying ladder",
-    "a aged ladder",
+    "an aged ladder",
     "a unstable ladder",
     "a staircase",
     "a wooden staircase",
@@ -339,7 +339,7 @@ enemies = {
         "hp": 60,
         "defeat": "The gargoyle makes a horrible noise before breaking into pieces.",
         "after": " The gargoyle pieces are scattered around.",
-        "no_attack": "For a split second, you think you see the gargoyle moved, but upon closer inspection, you realize it's simply a trick of the light. The statue remains motionless, much to your relief.",
+        "no_attack": "For a split second, you think you see the gargoyle moved, but upon closer inspection, you realize it's simply a trick of the light. The gargoyle remains motionless, much to your relief.",
     },
     "pack of rats": {
         "likelihood": 3,
@@ -365,7 +365,7 @@ enemies = {
         "after": " The pig is hiding behind behind a curtain.",
         "no_attack": "The pig snorts and grumbles at you, then seems to reconsider. 'You're not worth it, kid,' it grunts in a surprisingly sophisticated tone. 'Go find someone else to bother.' The pig then turns and walks away, leaving you feeling oddly rejected.",
     },
-    "coffer with eyes?": {
+    "coffer with eyes": {
         "likelihood": 1,
         "attacks": "The coffer suddenly springs open, revealing a set of razor-sharp teeth and a pair of glowing red eyes!",
         "hp": 80,

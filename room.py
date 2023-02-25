@@ -1,5 +1,7 @@
-import random, re
 import attr
+import random
+import re
+
 
 """Attributes file"""
 
@@ -136,13 +138,13 @@ class Room:
                 f'You see {self.current_room["trap_doors"]} beneath you.'
             )
 
-        if self.seed[2:4] > "60":
+        if self.seed[2:4] > "50":
             description_search += "\033[93m\033[01mLoot\033[0m. "
             description_search += (
                 f'You see {self.current_room["containers"]} {attr.directions[4]}. '
             )
             self.loot = re.findall(r"'(.*)'", self.current_room["containers"])
-        if self.seed[4:6] > "40":
+        if self.seed[4:6] > "50":
             self.potion = "red potion"
             description_search += "\033[96m\033[01mPotion\033[0m. "
             description_search += f"You see a 'red potion' {attr.directions[5]}."

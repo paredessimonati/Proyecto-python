@@ -1,8 +1,12 @@
+import sys
+
+import os
+import text
 from game_logic import main_loop
 from player import Player
-import text, os
 
-DEBUG_MODE = 1  # skips intro and stuff
+
+DEBUG_MODE = 0  # skips intro and stuff
 
 
 def main():
@@ -10,13 +14,13 @@ def main():
     difficulty = 0
 
     # Set probability of the enemy spawning in the current room.
-    enemy_spawning = 99
+    enemy_spawning = 60
 
     if DEBUG_MODE == 0:
         # clear the screen
         os.system("cls" if os.name == "nt" else "clear")
         print(text.castle)
-        text.title2("ADVENTURE!!!")
+        text.title("ADVENTURE!!!")
         # Create a Player
         player = Player()
         player_name = input("Please enter your name:")
@@ -36,17 +40,12 @@ def main():
         "player": player,
         "room_counter": room_counter,
     }
-    main_loop(game_variables)
-
-    # # debug section
-
-    # print("------")
-    # print("------")
-    # print("------")
-    # print("------")
-    # print("------")
-    # print("------")
-    # print(room_counter)
+    death = main_loop(game_variables)
+    if death == True:
+        os.system("cls" if os.name == "nt" else "clear")
+        print(text.castle)
+        text.death("GAME OVER")
+    sys.exit()
 
 
 if __name__ == "__main__":

@@ -1,11 +1,14 @@
-import os, sys, random
+import sys
+
 import attr
+import os
+import random
 import text
 from enemy import Enemy
 from room import Room
 
 
-def main_loop(var) -> None:
+def main_loop(var) -> bool:
     """
     Main loop of the game
 
@@ -35,8 +38,7 @@ def main_loop(var) -> None:
 
         # Room description
         room_description = room.describe_room(room_counter, enemy_spawn)
-        text.format(room_description, "jump")
-        text.super_line()
+        command(player, room_description, custom_menu=text.fight_menu)
         input()
         # Describe enemy if visible
         os.system("cls" if os.name == "nt" else "clear")
@@ -47,8 +49,9 @@ def main_loop(var) -> None:
             # If enemy is aggro, automatic fight
             if enemy.aggro:
                 enemy_description += text.bold(attr.enemies[enemy_name]["attacks"])
-                text.format(enemy_description, "double")
-                text.super_line()
+                command(player, enemy_description, custom_menu=text.fight_menu)
+                # text.format(enemy_description, "double")
+                # text.super_line()
                 input()
                 os.system("cls" if os.name == "nt" else "clear")
                 room_description = fight_loop(
@@ -58,22 +61,19 @@ def main_loop(var) -> None:
             # If not aggro, description of enemy with no_attack variable.
             else:
                 enemy_description += attr.enemies[enemy_name]["no_attack"]
-                text.format(enemy_description, "double")
-                text.super_line()
+                command(player, enemy_description, custom_menu=text.fight_menu)
+                # text.format(enemy_description, "double")
+                # text.super_line()
                 input()
                 os.system("cls" if os.name == "nt" else "clear")
         else:
             room_description += room.current_room["no_enemy"]
-        ### NO SE QUE WEA ESTABA PENSANDO, BORRAR
-        # if enemy.visible and enemy.alive:
-        #     action = command(player, attr.enemies[enemy.name]["after"])
-        # else:
-        #     action = command(player, room.current_room["no_enemy"])
 
         # Room investigation
         # Set flags for room search 1 or 0, might remove later
         search_flag = 0
-
+        if player._hp <= 0:
+            return True
         # Temp description so it doesnt overwrite the others while it loops
         # through the while loop.
         buffer = room_description
@@ -81,18 +81,16 @@ def main_loop(var) -> None:
             # Checking for commands imputs
 
             command(player, buffer)
-            # print(room_description)
-            # print(room.room_search())
-            # print(buffer)
             action = input("Type command: ")
             if action in ("room", "r"):
                 buffer = room_description
-                command(player, room_description)
+                continue
+                # command(player, room_description)
             # Searches the room
             if action in ("search", "s"):
                 search_description = room.room_search()
                 buffer = search_description
-                command(player, search_description)
+                # command(player, search_description)
                 search_flag = 1
                 continue
 
@@ -106,17 +104,17 @@ def main_loop(var) -> None:
                 if loot == "":
                     string = "You didnt find anything, try the next room."
                     buffer = string
-                    command(player, string)
                     continue
                 while True:
                     try:
                         string = f"Do you want to open the {loot[0]}?"
                         loot_choice = command(player, string, text.yes_no)
                         loot_choice = input("Type command: ")
+                        buffer = room_description
                         if loot_choice == "y":
                             string = f"You receive {loot_item}"
-                            buffer = string
-                            command(player, string)
+                            command(player, string, custom_menu=text.fight_menu)
+                            input()
                             room.seed = room.seed[:2] + "00" + room.seed[4:]
                             break
 
@@ -125,13 +123,20 @@ def main_loop(var) -> None:
 
                         elif loot_choice in ("no", "n"):
                             string = "Better safe than sorry."
-                            buffer = string
-                            command(player, string)
+                            command(player, string, custom_menu=text.fight_menu)
+                            input()
                             break
                         else:
                             raise ValueError("Invalid Input")
                     except ValueError:
                         search_flag += 1
+                        if search_flag == 3:
+                            you_better_collaborate(player, 2)
+                        if search_flag == 4:
+                            you_better_collaborate(player, 3)
+                        if search_flag == 5:
+                            you_better_collaborate(player, 4)
+                            return True
                         if search_flag == 15:
                             sys.exit("come on....")
 
@@ -147,39 +152,44 @@ def main_loop(var) -> None:
                 if potion == "":
                     string = "You didnt find any potions, try the next room."
                     buffer = string
-                    command(player, string)
                     continue
                 while True:
                     try:
                         string = "Do you want to drink the potion?"
-                        buffer = string
                         loot_choice = command(player, string, text.yes_no)
                         loot_choice = input("Type command: ")
+                        buffer = room_description
                         if loot_choice in ("y", "yes"):
                             player.damage_received(-100)
                             string = "You receive a sudden rush of energy."
-                            buffer = string
-                            command(player, string)
+                            command(player, string, custom_menu=text.fight_menu)
+                            input()
                             room.seed = room.seed[:4] + "00" + room.seed[6:]
                             # if implemented, different potions could be good or bad
                             break
 
                         elif loot_choice in ("n", "no"):
                             string = "Better safe than sorry."
-                            buffer = string
-                            command(player, string)
+                            command(player, string, custom_menu=text.fight_menu)
+                            input()
                             break
                         else:
                             raise ValueError("Invalid Input")
                     except ValueError:
                         search_flag += 1
+                        if search_flag == 3:
+                            you_better_collaborate(player, 2)
+                        if search_flag == 4:
+                            you_better_collaborate(player, 3)
+                        if search_flag == 5:
+                            you_better_collaborate(player, 4)
+                            return True
                         if search_flag == 15:
                             sys.exit("come on....")
 
             if action in ("attack", "a"):
                 if enemy.visible and enemy.alive:
                     string = f"Are you sure you want to attack a {enemy_name}?"
-                    buffer = string
                     command(player, string, text.yes_no)
                     attack_choice = input("Type command: ")
                     if attack_choice in ("yes" or "y"):
@@ -187,68 +197,41 @@ def main_loop(var) -> None:
                             player, enemy, difficulty, room_description
                         )
                     else:
-                        buffer = room_description
                         continue
                 else:
                     string = "There's no one worth attacking."
-                    buffer = string
-                    command(player, string)
+                    command(player, string, custom_menu=text.fight_menu)
+                    input()
             if action in ("exit", "e"):
                 if search_first(search_flag, player):
                     continue
-
                 exits = room.current_room["exits"]
-                command(player, exits, custom_function=text.print_exit)
 
-                choice = input("Which door number do you choose? ")
-                if choice == "1" or choice == "2" or choice == "3":
-                    break
-                else:
-                    sys.exit("YOU DIE")
+                while True:
+                    try:
+                        command(player, exits, custom_function=text.print_exit)
+                        choice = input("Which door number do you choose? ")
+                        if choice == "1" or choice == "2" or choice == "3":
+                            break
+                        else:
+                            raise ValueError("Invalid Input")
+                    except ValueError:
+                        search_flag += 1
+                        if search_flag == 3:
+                            you_better_collaborate(player, 2)
+                        if search_flag == 4:
+                            you_better_collaborate(player, 3)
+                        if search_flag == 5:
+                            you_better_collaborate(player, 4)
+                            return True
+                        if search_flag == 15:
+                            sys.exit("come on....")
+
             continue
 
         os.system("cls" if os.name == "nt" else "clear")
         room_counter += 1
         continue
-
-        # continue
-        # description = f'Do you want to open the {loot}?\033[1E{text.green("Yes"), text.red("No")}'
-        # command(player, description)
-        # input()
-        # except ValueError:
-        #     print("WATAFACA :(")
-        #     sys.exit()
-
-        # try:
-        #     loot = room.room_loot()
-        # except:
-
-        # input()
-        # else:
-        #     action = command(player, description)
-        # action = command(player, description)
-        # print(f"action: {action}")
-        # if action == "room" or action == "r":
-        #     print("CANCHATAMARA")
-        # else:
-        #     print("CONCHOTOMORO")
-        # enemy.description(seed, difficulty, room)
-        # print(seed)
-        # print(player.hp)
-        # print("enemy_name")
-        # print(enemy_name)
-        # print("enemy")
-        # print(enemy.visible)
-        # print("room")
-        # print(room.current_room["what_in_front"])
-        # print(room_counter)
-        # print(text.line)
-        # x = room.describe_room(1, True)
-        # text.format(x)
-        sys.exit()
-        # DONT FORGET
-        room_counter  # DONT FORGET
-        # DONT FORGET
 
 
 def command(
@@ -265,7 +248,7 @@ def command(
     return print(custom_menu())
 
 
-def fight_loop(player, enemy, difficulty, room_description) -> None:
+def fight_loop(player, enemy, difficulty, room_description):
     """
     Fighting loop
 
@@ -275,9 +258,6 @@ def fight_loop(player, enemy, difficulty, room_description) -> None:
     Nothing fancy.
 
     """
-
-    # new_line = f"{'-' * 27}Health: {player._hp}{'-' * 27}\n"
-    # press_to_continue = f"{'-' * 21}Press Enter to Continue{'-' * 21}\n"
 
     # Combat loop
     while player.hp > 0 and enemy.hp > 0:
@@ -301,7 +281,7 @@ def fight_loop(player, enemy, difficulty, room_description) -> None:
                 f'{text.bold(attr.enemies[enemy.name]["defeat"])}',
                 custom_menu=text.fight_menu,
             )
-            input("Type command: ")
+            input()
 
             room_description += attr.enemies[enemy.name]["after"]
 
@@ -321,12 +301,10 @@ def fight_loop(player, enemy, difficulty, room_description) -> None:
 
         # Check if player is still alive
         if player._hp <= 0:
-            sys.exit("Game Over")
+            continue
 
         input("Press Enter to Continue")
         print("\033[999D\033[1A", end="")
-
-    # break
 
 
 def search_first(search_flag, player) -> bool:
@@ -337,3 +315,20 @@ def search_first(search_flag, player) -> bool:
         input()
         return True
     return False
+
+
+def you_better_collaborate(player, n):
+    if n == 2:
+        string = "You hear something."
+        command(player, string, custom_menu=text.fight_menu)
+        input()
+    if n == 3:
+        string = "You hear something again.\n\nWhatever it is, is getting closer!"
+        command(player, string, custom_menu=text.fight_menu)
+        input()
+    if n == 4:
+        os.system("cls" if os.name == "nt" else "clear")
+        for i in range(4):
+            print(f"The Shadow attacks you for {text.red(999)} damage!")
+            print("The Shadow evades your attack!\n")
+            input("Press Enter to Continue\n")
