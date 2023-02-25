@@ -135,7 +135,7 @@ class Room:
 
         if self.seed[0:2] > "95":
             description_search += (
-                f'You see {self.current_room["trap_doors"]} beneath you.'
+                f'You see {self.current_room["trap_doors"]} beneath you. '
             )
 
         if self.seed[2:4] > "50":

@@ -6,7 +6,7 @@ from game_logic import main_loop
 from player import Player
 
 
-DEBUG_MODE = 0  # skips intro and stuff
+DEBUG_MODE = 1  # skips intro and stuff
 
 
 def main():

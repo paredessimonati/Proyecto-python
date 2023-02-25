@@ -31,7 +31,7 @@ class color:
 
 
 # controls time delay in seconds, 0 is fastest
-TEXTSPEED = 0.08
+TEXTSPEED = 0
 
 
 # Lines to make things clearer

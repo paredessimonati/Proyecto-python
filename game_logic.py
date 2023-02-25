@@ -206,7 +206,6 @@ def main_loop(var) -> bool:
                 if search_first(search_flag, player):
                     continue
                 exits = room.current_room["exits"]
-
                 while True:
                     try:
                         command(player, exits, custom_function=text.print_exit)
@@ -227,8 +226,7 @@ def main_loop(var) -> bool:
                         if search_flag == 15:
                             sys.exit("come on....")
 
-            continue
-
+                break
         os.system("cls" if os.name == "nt" else "clear")
         room_counter += 1
         continue
