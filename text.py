@@ -31,7 +31,7 @@ class color:
 
 
 # controls time delay in seconds, 0 is fastest
-TEXTSPEED = 0.08
+TEXTSPEED = 0.06
 
 
 # Lines to make things clearer
@@ -151,7 +151,7 @@ def title(letters):
     for letter in letters:
         print(letter, end="", flush=True)
         time.sleep(TEXTSPEED)
-    print("\033[32C", end="")
+    print("\033[26C", end="")
     print("\033[3B", end="")
     for letter in "caaak":
         print(letter, end="", flush=True)

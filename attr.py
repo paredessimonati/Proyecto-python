@@ -3,21 +3,21 @@ Attributes
 """
 room = [
     "You step through the door and into a new room. ",
-    "The room comes into view as you cross the threshold. ",
-    "You feel a sense of anticipation as you enter the room. ",
-    "The air changes as you step into the new space. ",
-    "The room seems to open up before you as you enter. ",
+    "The new room comes into view as you cross the threshold. ",
+    "You feel a sense of anticipation as you enter the new room. ",
+    "The air changes as you step into this new space. ",
+    "This new room seems to open up before you as you enter. ",
     "You take a moment to look around the new space. ",
     "As you cross the threshold, you sense a change in the air temperature. ",
-    "The room greets you with a sudden shift in atmosphere. ",
-    "You can hear echoes of your footsteps as you step into the room. ",
+    "This room greets you with a sudden shift in atmosphere. ",
+    "You can hear echoes of your footsteps as you step into this room. ",
     "The space is unfamiliar, but you feel a sense of possibility. ",
 ]
 
 visibility = [
     "The room is pitch black. The temperature ",
     "The light is dim. The room ",
-    "The light is Shadowy. The room ",
+    "The light is shadowy. The room ",
     "The room is faintly lit. The temperature ",
     "The light almost blinds you, the room ",
     "The light is blinding, it hurts your eyes. The room ",

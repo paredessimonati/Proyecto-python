@@ -87,11 +87,11 @@ class Room:
 
         # If this is the first room defaults to open your eyes.
         if count == 0:
-            print("\nYou open your eyes.\n")
+            self.description += "You open your eyes. "
 
         # Else selects first random string.
         else:
-            print(f'{self.current_room["room"]}\n')
+            self.description += f'{self.current_room["room"]}'
 
         s = list(self.current_room.values())[1:5]
         self.description += "".join(s)
